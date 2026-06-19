@@ -1,0 +1,18 @@
+# === comfyui-video : moteurs VIDEO ===
+# Base officielle worker-comfyui (handler API RunPod inclus).
+FROM runpod/worker-comfyui:5.4.0-base
+
+# Custom nodes (encodage / helpers video)
+RUN comfy-node-install comfyui-videohelpersuite comfyui-kjnodes
+
+# --- Wan 2.2 TI2V-5B : texte->video ET image->video, 720p, ~10 Go, poids ouverts ---
+RUN wget -q -O /comfyui/models/diffusion_models/wan2.2_ti2v_5B_fp16.safetensors \
+    "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_ti2v_5B_fp16.safetensors"
+
+RUN wget -q -O /comfyui/models/vae/wan2.2_vae.safetensors \
+    "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan2.2_vae.safetensors"
+
+RUN wget -q -O /comfyui/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors \
+    "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+
+# --- v2 plus tard : HunyuanVideo, LTX-Video, Wan 2.2 14B + LoRA lightx2v ---

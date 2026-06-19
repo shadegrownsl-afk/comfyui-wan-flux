@@ -1,0 +1,13 @@
+# === comfyui-image : moteur IMAGE ===
+# Base officielle worker-comfyui (handler API RunPod inclus).
+FROM runpod/worker-comfyui:5.4.0-base
+
+# --- Flux schnell : checkpoint fp8 tout-en-un (~17 Go), Apache-2.0, deja "turbo" (4 etapes) ---
+# Pas de LoRA z-turbo ici : schnell EST la version turbo, ce serait redondant.
+RUN wget -q -O /comfyui/models/checkpoints/flux1-schnell-fp8.safetensors \
+    "https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell-fp8.safetensors"
+
+# --- Emplacement LoRA realisme (a remplir plus tard) ---
+# Deposer ici les LoRA compatibles Flux, dossier models/loras/ :
+# RUN wget -q -O /comfyui/models/loras/<nom>.safetensors "<URL_DIRECTE_DU_LORA>"
+# (repo public => ne JAMAIS coller de token CivitAI ici)
