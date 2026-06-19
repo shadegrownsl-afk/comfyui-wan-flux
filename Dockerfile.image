@@ -1,13 +1,18 @@
-# === comfyui-image : moteur IMAGE ===
-# Base officielle worker-comfyui (handler API RunPod inclus).
-FROM runpod/worker-comfyui:5.8.5-base
+# === comfyui-image : moteur IMAGE (Flux.2 klein 4B) ===
+# Creation + edition d'image dans un seul modele. Apache-2.0 (commercial OK), sans token.
+FROM runpod/worker-comfyui:5.8.6-base
 
-# --- Flux schnell : checkpoint fp8 tout-en-un (~17 Go), Apache-2.0, deja "turbo" (4 etapes) ---
-# Pas de LoRA z-turbo ici : schnell EST la version turbo, ce serait redondant.
-RUN wget -q -O /comfyui/models/checkpoints/flux1-schnell-fp8.safetensors \
-    "https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell-fp8.safetensors"
+# --- Diffusion : Flux.2 klein 4B distilled (rapide ~1.2s, 4 etapes, ~4 Go) ---
+RUN wget -q -O /comfyui/models/diffusion_models/flux-2-klein-4b-fp8.safetensors \
+    "https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8/resolve/main/flux-2-klein-4b-fp8.safetensors"
 
-# --- Emplacement LoRA realisme (a remplir plus tard) ---
-# Deposer ici les LoRA compatibles Flux, dossier models/loras/ :
-# RUN wget -q -O /comfyui/models/loras/<nom>.safetensors "<URL_DIRECTE_DU_LORA>"
-# (repo public => ne JAMAIS coller de token CivitAI ici)
+# --- Text encoder : Qwen3-4B (Flux.2) ---
+RUN wget -q -O /comfyui/models/text_encoders/qwen_3_4b.safetensors \
+    "https://huggingface.co/Comfy-Org/flux2-klein-4B/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors"
+
+# --- VAE Flux.2 ---
+RUN wget -q -O /comfyui/models/vae/flux2-vae.safetensors \
+    "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors"
+
+# Flux.2 klein 4B fait texte->image ET edition (style, remplacement/suppression d'objet,
+# composition multi-references) -> remplace Qwen-Image-Edit. Tout en Apache-2.0.
