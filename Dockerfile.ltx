@@ -18,5 +18,9 @@ RUN wget -q -O /comfyui/models/text_encoders/gemma_3_12B_it_fp4_mixed.safetensor
 RUN wget -q -O /comfyui/models/loras/ltx-2.3-22b-distilled-lora-384.safetensors \
     "https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-22b-distilled-lora-384.safetensors"
 
+# --- Audio VAE LTX 2.3 (pour l'audio/lip-sync natif) ---
+RUN wget -q -O /comfyui/models/vae/LTX23_audio_vae_bf16.safetensors \
+    "https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/vae/LTX23_audio_vae_bf16.safetensors"
+
 # Upscaler spatial (optionnel) non bake en v1 pour rester leger.
 # Sortie audio+video = .mp4. GPU 48 Go conseille.
