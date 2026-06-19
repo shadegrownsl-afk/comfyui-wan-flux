@@ -1,6 +1,6 @@
 # === comfyui-video : moteurs VIDEO ===
 # Base officielle worker-comfyui (handler API RunPod inclus).
-FROM runpod/worker-comfyui:5.4.0-base
+FROM runpod/worker-comfyui:5.8.5-base
 
 # Custom nodes (encodage / helpers video)
 RUN comfy-node-install comfyui-videohelpersuite comfyui-kjnodes

@@ -1,6 +1,6 @@
 # === comfyui-image : moteur IMAGE ===
 # Base officielle worker-comfyui (handler API RunPod inclus).
-FROM runpod/worker-comfyui:5.4.0-base
+FROM runpod/worker-comfyui:5.8.5-base
 
 # --- Flux schnell : checkpoint fp8 tout-en-un (~17 Go), Apache-2.0, deja "turbo" (4 etapes) ---
 # Pas de LoRA z-turbo ici : schnell EST la version turbo, ce serait redondant.
