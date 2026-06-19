@@ -1,7 +1,10 @@
-# === comfyui-ltx : moteur LTX-Video 2.3 (22B) ===
-# texte->video + image->video. Licence LTX-2 Community (verifier le seuil commercial).
-# Fichiers fp8 ComfyUI (ungated) : Kijai/LTX2.3_comfy + GitMylo (encodeur Gemma).
+# === comfyui-ltx : moteur LTX-Video 2.3 (22B) + AUDIO natif ===
+# texte->video, image->video, et audio/lip-sync genere dans la meme passe.
+# Licence LTX-2 Community (verifier le seuil commercial). Fichiers fp8 ComfyUI ungated.
 FROM runpod/worker-comfyui:5.8.6-base
+
+# --- Libs audio (mel-spectro / I/O audio) ---
+RUN pip install --no-cache-dir librosa soundfile || true
 
 # --- Transformer LTX 2.3 22B distilled v1.1 (fp8 scaled, ~22 Go) ---
 RUN wget -q -O /comfyui/models/diffusion_models/ltx-2.3-22b-distilled-1.1_fp8_scaled.safetensors \
@@ -19,5 +22,10 @@ RUN wget -q -O /comfyui/models/text_encoders/ltx-2.3_text_projection_bf16.safete
 RUN wget -q -O /comfyui/models/vae/LTX23_video_vae_bf16.safetensors \
     "https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/vae/LTX23_video_vae_bf16.safetensors"
 
-# NB : image ~35-45 Go -> GPU 48 Go conseille. Audio natif = v2 (necessite audio_vae + vocoder).
-# Workflow LTX 2.3 a valider au deploiement (loaders + projection, structure differente de Wan/Flux).
+# --- VAE AUDIO LTX 2.3 (lip-sync natif) ---
+RUN wget -q -O /comfyui/models/vae/LTX23_audio_vae_bf16.safetensors \
+    "https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/vae/LTX23_audio_vae_bf16.safetensors"
+
+# NB : image ~37-47 Go -> GPU 48 Go conseille. Sortie audio+video = .mp4 (muxe).
+# Lip-sync sur audio FOURNI (uploader une voix) = ajout possible du MelBand Roformer separator en v2.
+# Workflow LTX 2.3 a valider au deploiement (loaders + projection + audio vae).
