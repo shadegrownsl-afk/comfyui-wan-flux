@@ -16,3 +16,14 @@ RUN wget -q -O /comfyui/models/vae/flux2-vae.safetensors \
 
 # Flux.2 klein 4B fait texte->image ET edition (style, remplacement/suppression d'objet,
 # composition multi-references) -> remplace Qwen-Image-Edit. Tout en Apache-2.0.
+
+# =========================================================
+#  AJOUT (add-only) : Chroma1-HD — uncensored, Apache-2.0, base Flux.1-schnell
+#  Ne touche pas a Flux.2 ci-dessus ; viffly continue d'utiliser Flux.2.
+# =========================================================
+RUN wget -q -O /comfyui/models/diffusion_models/Chroma1-HD.safetensors \
+    "https://huggingface.co/lodestones/Chroma1-HD/resolve/main/Chroma1-HD.safetensors"
+RUN wget -q -O /comfyui/models/text_encoders/t5xxl_fp8_e4m3fn_scaled.safetensors \
+    "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn_scaled.safetensors"
+RUN wget -q -O /comfyui/models/vae/ae.safetensors \
+    "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors"
