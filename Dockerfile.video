@@ -16,17 +16,3 @@ RUN wget -q -O /comfyui/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetens
     "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
 
 # --- v2 plus tard : HunyuanVideo, LTX-Video, Wan 2.2 14B + LoRA lightx2v ---
-
-# =========================================================
-#  AJOUT (add-only) : HunyuanVideo 1.5 — t2v/i2v 720p, 8.3B, rapide (24 Go)
-#  Ne touche pas a Wan 2.2 ci-dessus ; viffly continue d'utiliser Wan 2.2.
-#  (Licence Tencent : verifier seuil commercial.)
-# =========================================================
-RUN wget -q -O /comfyui/models/diffusion_models/hunyuanvideo1.5_720p_t2v_fp16.safetensors \
-    "https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/diffusion_models/hunyuanvideo1.5_720p_t2v_fp16.safetensors"
-RUN wget -q -O /comfyui/models/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors \
-    "https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors"
-RUN wget -q -O /comfyui/models/text_encoders/byt5_small_glyphxl_fp16.safetensors \
-    "https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/text_encoders/byt5_small_glyphxl_fp16.safetensors"
-RUN wget -q -O /comfyui/models/vae/hunyuanvideo15_vae_fp16.safetensors \
-    "https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/vae/hunyuanvideo15_vae_fp16.safetensors"
